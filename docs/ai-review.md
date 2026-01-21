@@ -14,7 +14,6 @@ There are some issues that need to be addressed:
 5. move the base url to playwright.config.js
 6. add Prettier for consistent code style
 
-
 #Step 2: app exploration
 
 The app exploration is completed. the flows were identified and documented in the e2e-test-flows.md file.
@@ -24,6 +23,3 @@ The IA could have been more thorough in identifying all the possible flows and t
 I change the risk classification in the flows Cart Operations and Product Management from Medium to High. this because these flows are critical to the application and should be tested more frequently.
 
 and the other flows do not test complete flows, they are just testing single actions. and the ability to move through all the products and the posibility to change the quantity of products in the cart is important to test.
-
-
-
