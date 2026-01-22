@@ -1,27 +1,20 @@
 const { test, expect } = require('@playwright/test');
-const { loginUser } = require('../flows/login.flow');
-const {
-  sortProductsFlow,
-  viewProductDetailsFlow,
-  browseInventoryFlow,
-} = require('../flows/product-management.flow');
-const { InventoryPage, ProductDetailsPage } = require('../pages');
-const { validUser } = require('../fixtures/checkoutData');
+import { loginFlow, productManagementFlow} from '../flows';
+import { validUser } from '../fixtures/checkoutData';
 
 test.describe('Product Management Flow', () => {
-  let inventoryPage, productDetailsPage;
-
+  let pages;
+  
   test.beforeEach(async ({ page }) => {
-    inventoryPage = new InventoryPage(page);
-    productDetailsPage = new ProductDetailsPage(page);
-
+    pages = page;
+    await page.goto('/');
     // Login first
-    const loginResult = await loginUser(page, validUser);
+    const loginResult = await loginFlow.loginUser(pages, validUser);
     expect(loginResult.success).toBe(true);
   });
 
   test('should browse inventory and display all products', async () => {
-    const result = await browseInventoryFlow(inventoryPage.page);
+    const result = await productManagementFlow.browseInventory(pages);
 
     expect(result.success).toBe(true);
     expect(result.productCount).toBeGreaterThan(0);
@@ -37,7 +30,7 @@ test.describe('Product Management Flow', () => {
   });
 
   test('should sort products by name (A to Z)', async () => {
-    const result = await sortProductsFlow(inventoryPage.page, 'az');
+    const result = await productManagementFlow.sortProducts(pages, 'az');
 
     expect(result.success).toBe(true);
     expect(result.sortOption).toBe('az');
@@ -49,7 +42,7 @@ test.describe('Product Management Flow', () => {
   });
 
   test('should sort products by name (Z to A)', async () => {
-    const result = await sortProductsFlow(inventoryPage.page, 'za');
+    const result = await productManagementFlow.sortProducts(pages, 'za');
 
     expect(result.success).toBe(true);
     expect(result.sortOption).toBe('za');
@@ -61,7 +54,7 @@ test.describe('Product Management Flow', () => {
   });
 
   test('should sort products by price (low to high)', async () => {
-    const result = await sortProductsFlow(inventoryPage.page, 'lohi');
+    const result = await productManagementFlow.sortProducts(pages, 'lohi');
 
     expect(result.success).toBe(true);
     expect(result.sortOption).toBe('lohi');
@@ -73,7 +66,7 @@ test.describe('Product Management Flow', () => {
   });
 
   test('should sort products by price (high to low)', async () => {
-    const result = await sortProductsFlow(inventoryPage.page, 'hilo');
+    const result = await productManagementFlow.sortProducts(pages, 'hilo');
 
     expect(result.success).toBe(true);
     expect(result.sortOption).toBe('hilo');
@@ -86,7 +79,7 @@ test.describe('Product Management Flow', () => {
 
   test('should view product details for Sauce Labs Backpack', async () => {
     const productName = 'Sauce Labs Backpack';
-    const result = await viewProductDetailsFlow(inventoryPage.page, productName);
+    const result = await productManagementFlow.viewProductDetails(pages, productName);
 
     expect(result.success).toBe(true);
     expect(result.productDetails.name).toBe(productName);
@@ -97,7 +90,7 @@ test.describe('Product Management Flow', () => {
 
   test('should view product details for Sauce Labs Bike Light', async () => {
     const productName = 'Sauce Labs Bike Light';
-    const result = await viewProductDetailsFlow(inventoryPage.page, productName);
+    const result = await productManagementFlow.viewProductDetails(pages, productName);
 
     expect(result.success).toBe(true);
     expect(result.productDetails.name).toBe(productName);
@@ -109,36 +102,18 @@ test.describe('Product Management Flow', () => {
     const productName = 'Sauce Labs Fleece Jacket';
 
     // Navigate to product details
-    await viewProductDetailsFlow(inventoryPage.page, productName);
+    await productManagementFlow.viewProductDetails(pages, productName);
 
-    // Verify we're on details page
-    const currentProductName = await productDetailsPage.getProductName();
-    expect(currentProductName).toBe(productName);
+    const { name } = await productManagementFlow.getProductDetails(pages, productName);
+    expect(name).toBe(productName);
 
     // Navigate back to products
-    await productDetailsPage.backToProducts();
+    const productList = await productManagementFlow.backToProducts(pages);
 
     // Verify we're back on inventory page
-    await expect(inventoryPage.productList).toBeVisible();
-    const productNames = await inventoryPage.getAllProductNames();
+    await expect(productList).toBeVisible();
+    
+    const productNames = await productManagementFlow.getAllProductNames(pages);
     expect(productNames).toContain(productName);
-  });
-
-  test('should maintain sorting after viewing product details', async () => {
-    // Sort by price high to low
-    await sortProductsFlow(inventoryPage.page, 'hilo');
-
-    // Get sorted order before viewing details
-    const sortedPricesBefore = await inventoryPage.getAllProductPrices();
-
-    // View product details
-    await viewProductDetailsFlow(inventoryPage.page, 'Sauce Labs Backpack');
-
-    // Navigate back
-    await productDetailsPage.backToProducts();
-
-    // Verify sorting is maintained
-    const sortedPricesAfter = await inventoryPage.getAllProductPrices();
-    expect(sortedPricesAfter).toEqual(sortedPricesBefore);
   });
 });

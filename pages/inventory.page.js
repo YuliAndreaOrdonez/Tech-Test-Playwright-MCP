@@ -12,7 +12,7 @@ class InventoryPage {
   }
 
   async getProductByName(productName) {
-    return this.page.locator(`.inventory_item:has-text("${productName}")`);
+    return this.page.locator('[data-test="inventory-item"]').filter({ hasText: productName });
   }
 
   async addProductToCart(productName) {
@@ -41,12 +41,12 @@ class InventoryPage {
   }
 
   async getAllProductNames() {
-    const products = await this.page.locator('.inventory_item_name').allTextContents();
+    const products = await this.page.locator('[data-test="inventory-item-name"]').allTextContents();
     return products;
   }
 
   async getAllProductPrices() {
-    const prices = await this.page.locator('.inventory_item_price').allTextContents();
+    const prices = await this.page.locator('[data-test="inventory-item-price"]').allTextContents();
     return prices.map((price) => parseFloat(price.replace('$', '')));
   }
 

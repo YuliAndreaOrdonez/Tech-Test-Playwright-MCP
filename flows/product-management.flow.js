@@ -22,7 +22,7 @@ async function addProductsToCart(page, products) {
   };
 }
 
-async function sortProductsFlow(page, sortOption) {
+async function sortProducts(page, sortOption) {
   const inventoryPage = new InventoryPage(page);
 
   // Get initial product order
@@ -53,7 +53,7 @@ async function sortProductsFlow(page, sortOption) {
   };
 }
 
-async function viewProductDetailsFlow(page, productName) {
+async function viewProductDetails(page, productName) {
   const inventoryPage = new InventoryPage(page);
   const productDetailsPage = new ProductDetailsPage(page);
 
@@ -74,7 +74,7 @@ async function viewProductDetailsFlow(page, productName) {
   };
 }
 
-async function browseInventoryFlow(page) {
+async function browseInventory(page) {
   const inventoryPage = new InventoryPage(page);
 
   // Get all products in inventory
@@ -96,9 +96,38 @@ async function browseInventoryFlow(page) {
   };
 }
 
+async function getProductDetails(page, productName) {
+  const productDetailsPage = new ProductDetailsPage(page);
+  const productDetails = await productDetailsPage.getProductDetails();
+  return productDetails;
+}
+
+async function backToProducts(page) {
+  const productDetailsPage = new ProductDetailsPage(page);
+  const inventoryPage = new InventoryPage(page);
+  await productDetailsPage.backToProducts();
+  return inventoryPage.productList;
+}
+
+async function getAllProductNames(page) {
+  const inventoryPage = new InventoryPage(page);
+  const productNames = await inventoryPage.getAllProductNames(); 
+  return productNames;
+}
+
+async function getAllProductPrices(page) {
+  const inventoryPage = new InventoryPage(page);
+  const productPrices = await inventoryPage.getAllProductPrices(); 
+  return productPrices;
+}
+
 module.exports = {
-  sortProductsFlow,
-  viewProductDetailsFlow,
-  browseInventoryFlow,
+  sortProducts,
+  viewProductDetails,
+  browseInventory,
   addProductsToCart,
+  getProductDetails,
+  backToProducts,
+  getAllProductNames,
+  getAllProductPrices
 };

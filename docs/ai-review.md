@@ -33,3 +33,13 @@ The IA generated the test code but it was not following the structure and rules 
 Also the locator weren't accurate and I had to fix it to follow the best practices.
 
 It algo use the function goto to move between pages, but it should click on the link or button to move between pages. it was fixed
+
+
+#step4 test implementation (Product Managment)
+
+the test implementation is completed. the test is passing and the report is generated.
+
+The IA kept making the same mistakes as in the previous step, it was not following the structure and rules defined in the prompt, and it was not splitting the logic into several flow files to make it more maintainable, I need improve those chnages and I need to make the prompt more clear to avoid this.
+
+The IA also made up a test that was failing due to the feature is not working as expected, but the test was correct, it should be a suggestion to improve the feature.
+

@@ -1,5 +1,5 @@
 import { CheckoutPage } from '../pages/checkout.page';
-import { addProductsToCart } from './inventory.flow';
+import { addProductsToCart } from './product-management.flow';
 import { verifyCartItems } from './cart.flow';
 
 async function completeCheckout(page, products, checkoutInfo) {
