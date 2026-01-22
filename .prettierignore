@@ -1,0 +1,9 @@
+# Ignore generated files and reports
+test-results/
+playwright-report/
+coverage/
+*.log
+node_modules/
+.git/
+# Ignore Playwright trace files
+*.zip
