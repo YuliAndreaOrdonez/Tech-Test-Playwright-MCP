@@ -23,17 +23,17 @@ async function completeCheckout(page, products, checkoutInfo) {
 async function fillInformation(page, checkoutInfo) {
   const checkoutPage = new CheckoutPage(page);
   await checkoutPage.fillCheckoutInformation(
-      checkoutInfo.firstName,
-      checkoutInfo.lastName,
-      checkoutInfo.postalCode
-    );
+    checkoutInfo.firstName,
+    checkoutInfo.lastName,
+    checkoutInfo.postalCode
+  );
 
-    // Complete flow
-    await checkoutPage.completeOrder();
+  // Complete flow
+  await checkoutPage.completeOrder();
 
-    const completionMessage = await checkoutPage.getCompletionMessage();
+  const completionMessage = await checkoutPage.getCompletionMessage();
 
-    return completionMessage;
+  return completionMessage;
 }
 
 module.exports = { completeCheckout, fillInformation };

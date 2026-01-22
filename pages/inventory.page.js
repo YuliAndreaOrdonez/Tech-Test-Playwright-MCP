@@ -33,6 +33,26 @@ class InventoryPage {
   async openMenu() {
     await this.menuButton.click();
   }
+
+  async clickProductByName(productName) {
+    const product = await this.getProductByName(productName);
+    const productLink = product.locator('[data-test^="item-"][data-test$="-title-link"]');
+    await productLink.click();
+  }
+
+  async getAllProductNames() {
+    const products = await this.page.locator('.inventory_item_name').allTextContents();
+    return products;
+  }
+
+  async getAllProductPrices() {
+    const prices = await this.page.locator('.inventory_item_price').allTextContents();
+    return prices.map((price) => parseFloat(price.replace('$', '')));
+  }
+
+  async getSortOption() {
+    return await this.sortDropdown.inputValue();
+  }
 }
 
 module.exports = { InventoryPage };

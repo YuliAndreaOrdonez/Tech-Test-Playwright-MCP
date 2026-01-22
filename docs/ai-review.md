@@ -24,7 +24,6 @@ I change the risk classification in the flows Cart Operations and Product Manage
 
 and the other flows do not test complete flows, they are just testing single actions. and the ability to move through all the products and the posibility to change the quantity of products in the cart is important to test.
 
-
 #step 3: test implementation (Complete Checkout Flow)
 
 the test implementation is completed. the test is passing and the report is generated.
@@ -34,5 +33,3 @@ The IA generated the test code but it was not following the structure and rules 
 Also the locator weren't accurate and I had to fix it to follow the best practices.
 
 It algo use the function goto to move between pages, but it should click on the link or button to move between pages. it was fixed
-
-

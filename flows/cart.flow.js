@@ -11,13 +11,13 @@ async function verifyCartItems(page, expectedItemCount) {
   if (cartItemCount !== expectedItemCount) {
     throw new Error(`Expected ${expectedItemCount} items in cart page, got ${cartItemCount}`);
   }
-  
+
   // Proceed to checkout
   await cartPage.proceedToCheckout();
 
   return {
     success: true,
-    cartItemCount: cartItemCount
+    cartItemCount: cartItemCount,
   };
 }
 

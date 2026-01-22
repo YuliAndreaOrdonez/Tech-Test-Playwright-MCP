@@ -1,4 +1,4 @@
-const { getOptionalLocator } = require("../utils/getOptionalElement");
+const { getOptionalLocator } = require('../utils/getOptionalElement');
 
 class LoginPage {
   constructor(page) {
