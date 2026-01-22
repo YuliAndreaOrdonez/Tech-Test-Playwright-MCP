@@ -1,10 +1,10 @@
 const { test, expect } = require('@playwright/test');
-import { loginFlow, productManagementFlow} from '../flows';
+import { loginFlow, productManagementFlow } from '../flows';
 import { validUser } from '../fixtures/checkoutData';
 
 test.describe('Product Management Flow', () => {
   let pages;
-  
+
   test.beforeEach(async ({ page }) => {
     pages = page;
     await page.goto('/');
@@ -112,7 +112,7 @@ test.describe('Product Management Flow', () => {
 
     // Verify we're back on inventory page
     await expect(productList).toBeVisible();
-    
+
     const productNames = await productManagementFlow.getAllProductNames(pages);
     expect(productNames).toContain(productName);
   });

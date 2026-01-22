@@ -111,13 +111,13 @@ async function backToProducts(page) {
 
 async function getAllProductNames(page) {
   const inventoryPage = new InventoryPage(page);
-  const productNames = await inventoryPage.getAllProductNames(); 
+  const productNames = await inventoryPage.getAllProductNames();
   return productNames;
 }
 
 async function getAllProductPrices(page) {
   const inventoryPage = new InventoryPage(page);
-  const productPrices = await inventoryPage.getAllProductPrices(); 
+  const productPrices = await inventoryPage.getAllProductPrices();
   return productPrices;
 }
 
@@ -129,5 +129,5 @@ module.exports = {
   getProductDetails,
   backToProducts,
   getAllProductNames,
-  getAllProductPrices
+  getAllProductPrices,
 };

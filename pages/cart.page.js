@@ -5,6 +5,7 @@ class CartPage {
     this.checkoutButton = page.locator('[data-test="checkout"]');
     this.continueShoppingButton = page.locator('[data-test="continue-shopping"]');
     this.cartLink = page.locator('[data-test="shopping-cart-link"]');
+    this.removeButtons = page.locator('[data-test^="remove-"]');
   }
 
   async navigate() {
@@ -25,6 +26,51 @@ class CartPage {
 
   async goToCart() {
     await this.cartLink.click();
+  }
+
+  async removeItem(productName) {
+    const removeButton = this.page.locator(
+      `[data-test="remove-${productName.toLowerCase().replace(/\s+/g, '-')}"]`
+    );
+    await removeButton.click();
+  }
+
+  async getCartItemNames() {
+    const items = await this.cartItems.all();
+    const names = [];
+
+    for (const item of items) {
+      const nameElement = await item.locator('.inventory_item_name').textContent();
+      if (nameElement) {
+        names.push(nameElement.trim());
+      }
+    }
+
+    return names;
+  }
+
+  async getCartItemPrices() {
+    const items = await this.cartItems.all();
+    const prices = [];
+
+    for (const item of items) {
+      const priceElement = await item.locator('.inventory_item_price').textContent();
+      if (priceElement) {
+        prices.push(parseFloat(priceElement.replace('$', '')));
+      }
+    }
+
+    return prices;
+  }
+
+  async getCartDetails() {
+    const names = await this.getCartItemNames();
+    const prices = await this.getCartItemPrices();
+
+    return names.map((name, index) => ({
+      name: name,
+      price: prices[index] || 0,
+    }));
   }
 }
 
