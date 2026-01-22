@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 import { loginFlow, productManagementFlow } from '../flows';
 import { validUser } from '../fixtures/checkoutData';
 

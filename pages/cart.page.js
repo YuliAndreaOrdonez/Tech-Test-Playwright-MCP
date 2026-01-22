@@ -6,6 +6,7 @@ class CartPage {
     this.continueShoppingButton = page.locator('[data-test="continue-shopping"]');
     this.cartLink = page.locator('[data-test="shopping-cart-link"]');
     this.removeButtons = page.locator('[data-test^="remove-"]');
+    this.cartTitle = page.locator('[data-test="title"]');
   }
 
   async navigate() {
@@ -40,7 +41,7 @@ class CartPage {
     const names = [];
 
     for (const item of items) {
-      const nameElement = await item.locator('.inventory_item_name').textContent();
+      const nameElement = await item.locator('[data-test="inventory_item_name"]').textContent();
       if (nameElement) {
         names.push(nameElement.trim());
       }
@@ -54,7 +55,7 @@ class CartPage {
     const prices = [];
 
     for (const item of items) {
-      const priceElement = await item.locator('.inventory_item_price').textContent();
+      const priceElement = await item.locator('[data-test="inventory_item_price"]').textContent();
       if (priceElement) {
         prices.push(parseFloat(priceElement.replace('$', '')));
       }
@@ -71,6 +72,10 @@ class CartPage {
       name: name,
       price: prices[index] || 0,
     }));
+  }
+
+  async getCartTitle() {
+    return await this.cartTitle.textContent();
   }
 }
 

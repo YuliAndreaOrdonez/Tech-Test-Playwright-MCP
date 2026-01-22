@@ -1,4 +1,4 @@
-const { LoginPage } = require('../pages/login.page');
+import { LoginPage } from '../pages';
 
 async function loginUser(page, user) {
   const loginPage = new LoginPage(page);

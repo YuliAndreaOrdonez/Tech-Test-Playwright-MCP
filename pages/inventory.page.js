@@ -53,6 +53,10 @@ class InventoryPage {
   async getSortOption() {
     return await this.sortDropdown.inputValue();
   }
+
+  async getProductList() {
+    return this.productList;
+  }
 }
 
 module.exports = { InventoryPage };

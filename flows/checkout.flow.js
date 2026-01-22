@@ -1,4 +1,4 @@
-import { CheckoutPage } from '../pages/checkout.page';
+import { CheckoutPage } from '../pages';
 import { addProductsToCart } from './product-management.flow';
 import { verifyCartItems } from './cart.flow';
 

@@ -1,5 +1,4 @@
-const { InventoryPage } = require('../pages/inventory.page');
-const { ProductDetailsPage } = require('../pages/product-details.page');
+import { InventoryPage, ProductDetailsPage } from '../pages';
 
 async function addProductsToCart(page, products) {
   const inventoryPage = new InventoryPage(page);
@@ -121,6 +120,11 @@ async function getAllProductPrices(page) {
   return productPrices;
 }
 
+async function getProductList(page) {
+  const inventoryPage = new InventoryPage(page);
+  return inventoryPage.getProductList();
+}
+
 module.exports = {
   sortProducts,
   viewProductDetails,
@@ -130,4 +134,5 @@ module.exports = {
   backToProducts,
   getAllProductNames,
   getAllProductPrices,
+  getProductList,
 };
