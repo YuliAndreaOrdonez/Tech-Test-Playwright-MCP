@@ -1,9 +1,14 @@
 class CartPage {
   constructor(page) {
     this.page = page;
-    this.cartItems = page.getByTestId('cart-item');
-    this.checkoutButton = page.getByTestId('checkout');
-    this.continueShoppingButton = page.getByTestId('continue-shopping');
+    this.cartItems = page.locator('[data-test="inventory-item"]');
+    this.checkoutButton = page.locator('[data-test="checkout"]');
+    this.continueShoppingButton = page.locator('[data-test="continue-shopping"]');
+    this.cartLink = page.locator('[data-test="shopping-cart-link"]');
+  }
+
+  async navigate() {
+    await this.page.goto('/cart.html');
   }
 
   async getCartItemCount() {
@@ -16,6 +21,10 @@ class CartPage {
 
   async continueShopping() {
     await this.continueShoppingButton.click();
+  }
+
+  async goToCart() {
+    await this.cartLink.click();
   }
 }
 

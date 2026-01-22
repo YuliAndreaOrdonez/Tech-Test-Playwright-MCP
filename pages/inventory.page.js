@@ -1,18 +1,24 @@
 class InventoryPage {
   constructor(page) {
     this.page = page;
-    this.productList = page.getByTestId('inventory-list');
-    this.addToCartButtons = page.getByTestId(/^add-to-cart-/);
-    this.cartBadge = page.getByTestId('shopping-cart-badge');
-    this.sortDropdown = page.getByTestId('product-sort-container');
-    this.menuButton = page.getByTestId('react-burger-menu-btn');
+    this.productList = page.locator('[data-test="inventory-list"]');
+    this.cartBadge = page.locator('[data-test="shopping-cart-badge"]');
+    this.sortDropdown = page.locator('[data-test="product-sort-container"]');
+    this.menuButton = page.locator('[data-test="react-burger-menu-btn"]');
+  }
+
+  async navigate() {
+    await this.page.goto('/inventory.html');
+  }
+
+  async getProductByName(productName) {
+    return this.page.locator(`.inventory_item:has-text("${productName}")`);
   }
 
   async addProductToCart(productName) {
-    const button = this.page.getByTestId(
-      `add-to-cart-${productName.toLowerCase().replace(/\s+/g, '-')}`
-    );
-    await button.click();
+    const product = await this.getProductByName(productName);
+    const addToCartButton = product.locator('[data-test^="add-to-cart-"]');
+    await addToCartButton.click();
   }
 
   async getCartBadgeCount() {

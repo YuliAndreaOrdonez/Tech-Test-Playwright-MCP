@@ -1,10 +1,16 @@
+const { getOptionalLocator } = require("../utils/getOptionalElement");
+
 class LoginPage {
   constructor(page) {
     this.page = page;
-    this.usernameInput = page.getByTestId('username');
-    this.passwordInput = page.getByTestId('password');
-    this.loginButton = page.getByTestId('login-button');
-    this.errorMessage = page.getByTestId('error');
+    this.usernameInput = page.locator('[data-test="username"]');
+    this.passwordInput = page.locator('[data-test="password"]');
+    this.loginButton = page.locator('[data-test="login-button"]');
+    this.errorMessage = '[data-test="error"]';
+  }
+
+  async navigate() {
+    await this.page.goto('/');
   }
 
   async login(username, password) {
@@ -14,7 +20,7 @@ class LoginPage {
   }
 
   async getErrorMessage() {
-    return await this.errorMessage.textContent();
+    return getOptionalLocator(this.page, this.errorMessage);
   }
 }
 

@@ -1,15 +1,18 @@
 class CheckoutPage {
   constructor(page) {
     this.page = page;
-    this.firstNameInput = page.getByTestId('firstName');
-    this.lastNameInput = page.getByTestId('lastName');
-    this.postalCodeInput = page.getByTestId('postalCode');
-    this.continueButton = page.getByTestId('continue');
-    this.cancelButton = page.getByTestId('cancel');
-    this.finishButton = page.getByTestId('finish');
-    this.backToProductsButton = page.getByTestId('back-to-products');
-    this.completeHeader = page.getByTestId('checkout-complete-container');
-    this.orderTotal = page.getByTestId('summary-total-label');
+    this.firstNameInput = page.locator('[data-test="firstName"]');
+    this.lastNameInput = page.locator('[data-test="lastName"]');
+    this.postalCodeInput = page.locator('[data-test="postalCode"]');
+    this.continueButton = page.locator('[data-test="continue"]');
+    this.cancelButton = page.locator('[data-test="cancel"]');
+    this.finishButton = page.locator('[data-test="finish"]');
+    this.backToProductsButton = page.locator('[data-test="back-to-products"]');
+    this.completeHeader = page.locator('[data-test="checkout-complete-container"]');
+  }
+
+  async navigate() {
+    await this.page.goto('/checkout-step-one.html');
   }
 
   async fillCheckoutInformation(firstName, lastName, postalCode) {
@@ -25,11 +28,6 @@ class CheckoutPage {
 
   async getCompletionMessage() {
     return await this.completeHeader.textContent();
-  }
-
-  async getOrderTotal() {
-    const totalText = await this.orderTotal.textContent();
-    return totalText;
   }
 
   async cancelCheckout() {
